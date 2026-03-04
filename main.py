@@ -10,7 +10,7 @@ from generator import generate_id_card
 
 app = FastAPI()
 
-APP_URL = "https://your-app-name.onrender.com/health"
+APP_URL = "https://id-card-pkye.onrender.com/health"
 def keep_alive():
     try:
         requests.get(APP_URL, timeout=10)
