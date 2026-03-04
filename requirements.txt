@@ -6,3 +6,4 @@ openpyxl
 pillow
 reportlab
 apscheduler
+requests

@@ -20,7 +20,7 @@ def keep_alive():
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(keep_alive, "interval", minutes=10)
-scheuler.start()
+scheduler.start()
 
 app.add_middleware(
     CORSMiddleware,
