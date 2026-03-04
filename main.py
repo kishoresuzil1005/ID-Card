@@ -26,7 +26,9 @@ os.makedirs(GEN_DIR, exist_ok=True)
 @app.get("/")
 def home():
     return FileResponse(os.path.join(BASE_DIR, "ui.html"))
-
+@app.get("/health")
+def health():
+    return {"status": "running"}
 
 # -----------------------------
 # GENERATE ID
