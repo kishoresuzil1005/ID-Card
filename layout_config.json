@@ -1,0 +1,100 @@
+{
+    "front": {
+        "photo": {
+            "box": [119,275,350,354],
+            "font_size": 40,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#1F4E8C"
+        },
+        "name": {
+            "box": [
+                52,
+                658,
+                484,
+                70
+            ],
+            "font_size": 48,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#1F4E8C"
+        },
+        "designation": {
+            "box": [
+                50,
+                737,
+                485,
+                50
+            ],
+            "font_size": 36,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#1F4E8C"
+        },
+        "emp_id": {
+            "box": [
+                297,
+                797,
+                248,
+                54
+            ],
+            "font_size": 36,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#1F4E8C"
+        }
+    },
+    "back": {
+        "phone": {
+            "box": [
+                191,
+                99,
+                348,
+                48
+            ],
+            "font_size": 30,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#FFFFFF"
+        },
+        "address": {
+            "box": [
+                214,
+                165,
+                327,
+                176
+            ],
+            "font_size": 30,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#FFFFFF"
+        },
+        "dob": {
+            "box": [
+                177,
+                349,
+                353,
+                54
+            ],
+            "font_size": 30,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#FFFFFF"
+        },
+        "blood": {
+            "box": [
+                289,
+                412,
+                250,
+                52
+            ],
+            "font_size": 30,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#FFFFFF"
+        },
+        "emergency_contact": {
+            "box": [
+                232,
+                540,
+                316,
+                45
+            ],
+            "font_size": 30,
+            "font": "Montserrat-Regular.ttf",
+            "color": "#FFFFFF"
+        }
+    }
+}

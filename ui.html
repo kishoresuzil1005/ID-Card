@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ID Card Generator</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+min-height:100vh;
+}
+
+.glass{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.15);
+}
+
+.input{
+width:100%;
+padding:12px;
+border-radius:10px;
+background:rgba(255,255,255,0.12);
+color:white;
+outline:none;
+}
+
+.input::placeholder{
+color:rgba(255,255,255,0.6);
+}
+
+</style>
+</head>
+
+<body class="text-white flex items-center justify-center p-10">
+
+<div class="w-[1200px] grid grid-cols-2 gap-8">
+
+<!-- LEFT FORM -->
+<div class="glass rounded-xl p-6 space-y-4">
+
+<h1 class="text-2xl font-bold">ID Card Generator</h1>
+
+<form id="idForm" class="space-y-4">
+
+<input class="input" name="name" placeholder="Full Name" required>
+
+<input class="input" name="emp_id" placeholder="Employee ID" required>
+
+<input class="input" name="designation" placeholder="Designation" required>
+
+<input class="input" name="phone" placeholder="Phone Number" required>
+
+<input class="input" name="dob" placeholder="Date of Birth" required>
+
+<input class="input" name="blood" placeholder="Blood Group" required>
+
+<input class="input" name="emergency_contact" placeholder="Emergency Contact" required>
+
+<textarea class="input" name="address" placeholder="Address"></textarea>
+
+<div>
+<label class="text-sm">Upload Photo</label>
+<input type="file" name="photo" accept="image/*">
+</div>
+
+<button
+type="submit"
+class="w-full py-3 bg-blue-500 rounded-lg font-bold hover:bg-blue-400">
+Generate Preview
+</button>
+
+<div id="status" class="text-yellow-300 text-sm"></div>
+
+</form>
+
+</div>
+
+<!-- RIGHT PREVIEW -->
+<div class="glass rounded-xl p-6 flex flex-col">
+
+<h2 class="text-xl font-semibold mb-4">Preview</h2>
+
+<div class="flex-1 bg-black/30 rounded-xl overflow-hidden flex items-center justify-center">
+
+<iframe
+id="previewFrame"
+class="w-full h-full hidden">
+</iframe>
+
+<div id="placeholder" class="text-gray-400">
+Preview will appear here
+</div>
+
+</div>
+
+<button
+id="downloadBtn"
+class="mt-4 py-3 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg hidden">
+Download PDF
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const form = document.getElementById("idForm")
+const previewFrame = document.getElementById("previewFrame")
+const placeholder = document.getElementById("placeholder")
+const downloadBtn = document.getElementById("downloadBtn")
+const status = document.getElementById("status")
+
+let fileId = null
+
+form.addEventListener("submit", async (e)=>{
+
+e.preventDefault()
+
+status.innerText="Generating ID..."
+
+const formData=new FormData(form)
+
+try{
+
+const response=await fetch("http://127.0.0.1:8000/generate-id/",{
+method:"POST",
+body:formData
+})
+
+const text=await response.text()
+
+let data
+
+try{
+data=JSON.parse(text)
+}catch{
+console.error("Invalid response:",text)
+status.innerText="Server error"
+return
+}
+
+fileId=data.file_id
+
+previewFrame.src=`http://127.0.0.1:8000/preview/${fileId}`
+
+previewFrame.classList.remove("hidden")
+placeholder.classList.add("hidden")
+
+downloadBtn.classList.remove("hidden")
+
+status.innerText="Preview Ready"
+
+}
+catch(err){
+
+console.error(err)
+status.innerText="Error generating ID"
+
+}
+
+})
+
+downloadBtn.addEventListener("click",()=>{
+
+if(!fileId) return
+
+const link=document.createElement("a")
+
+link.href=`http://127.0.0.1:8000/download/${fileId}`
+
+link.download="id_card.pdf"
+
+document.body.appendChild(link)
+
+link.click()
+
+document.body.removeChild(link)
+
+})
+
+</script>
+
+</body>
+</html>
