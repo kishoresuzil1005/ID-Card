@@ -129,7 +129,7 @@ const formData=new FormData(form)
 
 try{
 
-const response=await fetch("http://127.0.0.1:8000/generate-id/",{
+const response=await fetch("/generate-id/",{
 method:"POST",
 body:formData
 })
@@ -148,7 +148,7 @@ return
 
 fileId=data.file_id
 
-previewFrame.src=`http://127.0.0.1:8000/preview/${fileId}`
+previewFrame.src=`/preview/${fileId}`
 
 previewFrame.classList.remove("hidden")
 placeholder.classList.add("hidden")
@@ -173,7 +173,7 @@ if(!fileId) return
 
 const link=document.createElement("a")
 
-link.href=`http://127.0.0.1:8000/download/${fileId}`
+link.href=`/download/${fileId}`
 
 link.download="id_card.pdf"
 

@@ -1,12 +1,26 @@
-from fastapi import FastAPI, UploadFile, File, Form
-from fastapi.responses import FileResponse, JSONResponse
+import requests
 import os
 import shutil
 import uuid
+from apscheduler.schedulers.background import BackgroundScheduler
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from generator import generate_id_card
 
 app = FastAPI()
+
+APP_URL = "https://your-app-name.onrender.com/health"
+def keep_alive():
+    try:
+        requests.get(APP_URL, timeout=10)
+        print("Self ping successful")
+    except Exception as e:
+        print("Ping failed:", e)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(keep_alive, "interval", minutes=10)
+scheuler.start()
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,7 +36,6 @@ GEN_DIR = os.path.join(BASE_DIR, "generated")
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(GEN_DIR, exist_ok=True)
-
 @app.get("/")
 def home():
     return FileResponse(os.path.join(BASE_DIR, "ui.html"))
